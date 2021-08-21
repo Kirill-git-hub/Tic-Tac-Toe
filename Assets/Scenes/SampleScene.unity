@@ -152,9 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13d9bd97439b9c43a36aa6312467c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chooseSideButton:
-  - {fileID: 1030434330}
-  - {fileID: 1443593184}
+  ButtonX: {fileID: 1030434330}
+  ButtonO: {fileID: 1443593184}
   exitButton: {fileID: 1401493738}
   gamePanel: {fileID: 865181421}
   menuPanel: {fileID: 1351729154}

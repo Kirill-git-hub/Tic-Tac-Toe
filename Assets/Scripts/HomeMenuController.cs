@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class HomeMenuController : MonoBehaviour
 {
-    [SerializeField] private Button[] chooseSideButton;
+    [SerializeField] private Button ButtonX;
+    [SerializeField] private Button ButtonO;
     [SerializeField] private Button exitButton;
     [SerializeField] private GameObject gamePanel; 
     [SerializeField] private GameObject menuPanel; 
@@ -15,11 +16,8 @@ public class HomeMenuController : MonoBehaviour
     {
         FinishGame();
         
-        for (int i = 0; i < chooseSideButton.Length; i++)
-        {
-            chooseSideButton[i].onClick.AddListener(() => StartGame());
-        }
-        
+        ButtonX.onClick.AddListener(() => StartGame());
+        ButtonO.onClick.AddListener(() => StartGame());
         exitButton.onClick.AddListener((() => FinishGame()));
     }
 
