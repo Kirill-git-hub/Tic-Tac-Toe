@@ -10,48 +10,45 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject restartButton;
     [SerializeField] private GameObject winnerX;
     [SerializeField] private GameObject winnerO;
-    [SerializeField] private int movesCount = 0;
+    [SerializeField] private int movesCount;
     [SerializeField] private List<GameButton> buttonList = new List<GameButton>();
     [SerializeField] private List<WinningCombination> combinations = new List<WinningCombination>();
     
     private PlayerType playerSide;
     private bool hasWinner;
     private bool isPlayersTurn = false;
+    private int totalMovesAvailable = 9;
 
+    #region Getters and Setters
 
+    public Sprite[] PlayerIcon => playerIcon;
+    
+    public AIController AIController => aiController;
+    
+    public int MovesCount
+    {
+        get => movesCount;
+        set => movesCount = value;
+    }
+    
+    public List<GameButton> ButtonList => buttonList;
+    
     public PlayerType PlayerSide
     {
         get => playerSide;
         set => playerSide = value;
     }
-
     public bool HasWinner => hasWinner;
-
-    public AIController AIController => aiController;
-
-    public List<GameButton> ButtonList
-    {
-        get => buttonList;
-        set => buttonList = value;
-    }
-
-    public Sprite[] PlayerIcon
-    {
-        get => playerIcon;
-        set => playerIcon = value;
-    }
-
+    
     public bool IsPlayersTurn
     {
         get => isPlayersTurn;
         set => isPlayersTurn = value;
     }
 
-    public int MovesCount
-    {
-        get => movesCount;
-        set => movesCount = value;
-    }
+    public int TotalMovesAvailable => totalMovesAvailable;
+
+    #endregion
 
     public void SetupFirstPlayer()
     {
@@ -75,13 +72,13 @@ public class GameController : MonoBehaviour
 
         if (PlayerSide == PlayerType.Cross)
         {
-            aiController.computerSide = PlayerType.Zero;
+            aiController.ComputerSide = PlayerType.Zero;
             
             isPlayersTurn = true;
         }
         else
         {
-            aiController.computerSide = PlayerType.Cross;
+            aiController.ComputerSide = PlayerType.Cross;
             
             aiController.MakeStep();
         }
@@ -102,7 +99,7 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-        if (movesCount >= 9 && !hasWinner)
+        if (movesCount >= TotalMovesAvailable && !hasWinner)
         {
             restartButton.SetActive(true);
         }
@@ -118,7 +115,6 @@ public class GameController : MonoBehaviour
         }
 
         restartButton.SetActive(true);
-
 
         if (winner == PlayerType.Cross)
         {
