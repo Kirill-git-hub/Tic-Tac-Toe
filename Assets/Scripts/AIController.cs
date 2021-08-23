@@ -8,11 +8,16 @@ public class AIController : MonoBehaviour
 {
     [SerializeField] private GameController gameController;
     
-    public PlayerType computerSide;
+    private PlayerType computerSide;
+
+    public PlayerType ComputerSide
+    {
+        set => computerSide = value;
+    }
 
     public void MakeStep()
     {
-        if (gameController.MovesCount < 9 && !gameController.IsPlayersTurn)
+        if (gameController.MovesCount < gameController.TotalMovesAvailable && !gameController.IsPlayersTurn)
         {
             GameButton randomButton = gameController.ButtonList[Random.Range(0, gameController.ButtonList.Count)];
             
