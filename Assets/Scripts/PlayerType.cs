@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum PlayerType
 {
-    Cross,
-    Zero
+    Cross = 0,
+    Zero = 1,
+    Empty = 2
 }
