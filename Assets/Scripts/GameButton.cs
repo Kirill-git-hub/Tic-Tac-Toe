@@ -24,6 +24,7 @@ public class GameButton : MonoBehaviour
         
         buttonImage.sprite = imageSprite;
         button.interactable = false;
+        Button.onClick.RemoveAllListeners();
         occupiedBy = playerType;
         gameController.MovesCount++;
 

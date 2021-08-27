@@ -24,7 +24,6 @@ public class AIController : MonoBehaviour
             if (randomButton.OccupiedBy == PlayerType.Empty)
             {
                 randomButton.Init(computerSide, gameController.PlayerIcon[(int)computerSide]);
-                randomButton.Button.onClick.RemoveAllListeners();
             }
             else
             {

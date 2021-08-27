@@ -52,7 +52,6 @@ public class GameController : MonoBehaviour
 
     public void SetupFirstPlayer()
     {
-        isPlayersTurn = PlayerSide == PlayerType.Cross;
         movesCount = 0;
         hasWinner = false;
         restartButton.SetActive(false);
@@ -60,8 +59,6 @@ public class GameController : MonoBehaviour
 
     public void SetStartingSide(PlayerType startingSide)
     {
-        SetupFirstPlayer();
-
         foreach (var button in ButtonList)
         {
             button.ResetButton();
@@ -70,21 +67,23 @@ public class GameController : MonoBehaviour
 
         PlayerSide = startingSide;
 
+        SetupFirstPlayer();
+
         if (PlayerSide == PlayerType.Cross)
         {
             aiController.ComputerSide = PlayerType.Zero;
-            
             isPlayersTurn = true;
         }
         else
         {
             aiController.ComputerSide = PlayerType.Cross;
+            isPlayersTurn = false;
             
             aiController.MakeStep();
         }
         
-        winnerX.gameObject.SetActive(false);
-        winnerO.gameObject.SetActive(false);
+        winnerX.SetActive(false);
+        winnerO.SetActive(false);
     }
 
     public void CheckWinner()
@@ -118,11 +117,11 @@ public class GameController : MonoBehaviour
 
         if (winner == PlayerType.Cross)
         {
-            winnerX.gameObject.SetActive(true);
+            winnerX.SetActive(true);
         }
         else
         {
-            winnerO.gameObject.SetActive(true);
+            winnerO.SetActive(true);
         }
     }
 

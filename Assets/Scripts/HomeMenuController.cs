@@ -43,7 +43,7 @@ public class HomeMenuController : MonoBehaviour
 
     public void SwitchPanels()
     {
-        menuPanel.gameObject.SetActive(gameController.PlayerSide == PlayerType.Empty);
-        gamePanel.gameObject.SetActive(gameController.PlayerSide != PlayerType.Empty);
+        menuPanel.SetActive(gameController.PlayerSide == PlayerType.Empty);
+        gamePanel.SetActive(gameController.PlayerSide != PlayerType.Empty);
     }
 }
