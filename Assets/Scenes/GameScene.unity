@@ -1826,7 +1826,7 @@ MonoBehaviour:
   winnerX: {fileID: 1144260151}
   winnerO: {fileID: 578798957}
   movesCount: 0
-  buttonList:
+  buttons:
   - {fileID: 1929193354}
   - {fileID: 225966605}
   - {fileID: 847552035}
@@ -1836,31 +1836,8 @@ MonoBehaviour:
   - {fileID: 1323757339}
   - {fileID: 1336502862}
   - {fileID: 180677159}
-  combinations:
-  - firstItem: {fileID: 1929193354}
-    secondItem: {fileID: 225966605}
-    thirdItem: {fileID: 847552035}
-  - firstItem: {fileID: 1968736271}
-    secondItem: {fileID: 267624358}
-    thirdItem: {fileID: 1631081233}
-  - firstItem: {fileID: 1323757339}
-    secondItem: {fileID: 1336502862}
-    thirdItem: {fileID: 180677159}
-  - firstItem: {fileID: 1929193354}
-    secondItem: {fileID: 1968736271}
-    thirdItem: {fileID: 1323757339}
-  - firstItem: {fileID: 225966605}
-    secondItem: {fileID: 267624358}
-    thirdItem: {fileID: 1336502862}
-  - firstItem: {fileID: 847552035}
-    secondItem: {fileID: 1631081233}
-    thirdItem: {fileID: 180677159}
-  - firstItem: {fileID: 1929193354}
-    secondItem: {fileID: 267624358}
-    thirdItem: {fileID: 180677159}
-  - firstItem: {fileID: 847552035}
-    secondItem: {fileID: 267624358}
-    thirdItem: {fileID: 1323757339}
+  combinations: []
+  step: 3
 --- !u!4 &821380788
 Transform:
   m_ObjectHideFlags: 0
@@ -3406,7 +3383,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameController: {fileID: 821380787}
-  computerSide: 0
 --- !u!4 &1480947510
 Transform:
   m_ObjectHideFlags: 0
