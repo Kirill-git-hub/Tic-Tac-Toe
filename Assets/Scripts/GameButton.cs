@@ -9,12 +9,18 @@ public class GameButton : MonoBehaviour
 {
     [SerializeField] private Button button;
     [SerializeField] private Image buttonImage;
-    [SerializeField] private GameController gameController;
-    
+
+    private GameController gameController;
     private PlayerType occupiedBy = PlayerType.Empty;
     
     public Button Button => button;
     public PlayerType OccupiedBy => occupiedBy;
+
+    public GameController GameController
+    {
+        get => gameController;
+        set => gameController = value;
+    }
 
     public void Init(PlayerType playerType, Sprite imageSprite)
     {
