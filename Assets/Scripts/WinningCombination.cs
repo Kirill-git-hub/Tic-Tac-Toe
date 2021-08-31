@@ -6,5 +6,7 @@ using UnityEngine;
 [Serializable]
 public class WinningCombination
 {
-    public List<GameButton> elements = new List<GameButton>();
+    [SerializeField] private List<GameButton> elements = new List<GameButton>();
+
+    public List<GameButton> Elements => elements;
 }
