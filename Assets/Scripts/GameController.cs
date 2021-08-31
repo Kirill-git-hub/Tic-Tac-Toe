@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -10,16 +11,19 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject restartButton;
     [SerializeField] private GameObject winnerX;
     [SerializeField] private GameObject winnerO;
-    [SerializeField] private int movesCount;
     [SerializeField] private List<GameButton> buttons = new List<GameButton>();
     [SerializeField] private List<WinningCombination> combinations = new List<WinningCombination>();
-    [SerializeField] private int step;
+    [SerializeField] private FieldController fieldController;
+
+    private const int DEFAULT_FIELD_SIZE = 3;
     
     private PlayerType playerSide;
     private bool hasWinner;
     private bool isPlayersTurn = false;
-    private int totalMovesAvailable = 9;
-    
+    private int totalMovesAvailable;
+    private int fieldSize = DEFAULT_FIELD_SIZE;
+    private int movesCount;
+
     #region Getters and Setters
 
     public Sprite[] PlayerIcon => playerIcon;
@@ -31,17 +35,19 @@ public class GameController : MonoBehaviour
         get => movesCount;
         set => movesCount = value;
     }
-    
     public List<GameButton> Buttons => buttons;
+    
+    public List<WinningCombination> Combinations => combinations;
     
     public PlayerType PlayerSide
     {
         get => playerSide;
         set => playerSide = value;
     }
+    
     public bool HasWinner => hasWinner;
     
-    public bool IsPlayersTurn
+    public bool IsPlayersTurn 
     {
         get => isPlayersTurn;
         set => isPlayersTurn = value;
@@ -49,76 +55,14 @@ public class GameController : MonoBehaviour
 
     public int TotalMovesAvailable => totalMovesAvailable;
 
-    #endregion
-
-    private void Start()
+    public int FieldSize
     {
-        // for (int i = 1; i <= step * step; i++)
-        // {
-        //     buttons.Add();
-        // }
-
-        GetHorizontalCell();
-        GetVerticalCell();
-        GetDiagonalCell();
+        get => fieldSize;
+        set => fieldSize = value < DEFAULT_FIELD_SIZE ? DEFAULT_FIELD_SIZE : value; 
     }
-
-    public void GetHorizontalCell()
-    {
-        int lastButton = 0;
-        
-        for (int i = 0; i < step; i++)
-        {
-            WinningCombination obj = new WinningCombination();
-            for (int j = 0; j < step; j++)
-            {
-                obj.elements.Add(buttons[lastButton]);
-                lastButton++;
-            }
-            combinations.Add(obj);
-        }
-    } 
     
-    public void GetVerticalCell()
-    {
-        for (int i = 0; i < step; i++)
-        {
-            WinningCombination obj = new WinningCombination();
-            int lastButton = i;
-            
-            for (int j = 0; j < step; j++)
-            {
-                obj.elements.Add(buttons[lastButton]);
-                lastButton += step;
-            }
-            combinations.Add(obj);
-        }
-    } 
+    #endregion
     
-    public void GetDiagonalCell()
-    {
-        WinningCombination obj = new WinningCombination();
-
-        int lastButton = 0;
-        
-        for (int i = 0; i < step; i++)
-        {
-            obj.elements.Add(buttons[lastButton]);
-            lastButton += step + 1;
-        }
-        combinations.Add(obj);
-        
-        obj = new WinningCombination();
-        lastButton = step - 1;
-        
-        for (int i = 0; i < step; i++)
-        {
-            obj.elements.Add(buttons[lastButton]);
-            lastButton += step - 1;
-        }
-        combinations.Add(obj);
-    } 
-
     public void SetupFirstPlayer()
     {
         movesCount = 0;
@@ -126,8 +70,12 @@ public class GameController : MonoBehaviour
         restartButton.SetActive(false);
     }
 
-    public void SetStartingSide(PlayerType startingSide)
+    public void InitGame(PlayerType startingSide)
     {
+        DestroyButtons();
+        
+        fieldController.BuildField();
+
         foreach (GameButton button in buttons)
         {
             button.ResetButton();
@@ -135,6 +83,8 @@ public class GameController : MonoBehaviour
         }
 
         PlayerSide = startingSide;
+
+        totalMovesAvailable = fieldSize * fieldSize;
 
         SetupFirstPlayer();
 
@@ -159,14 +109,24 @@ public class GameController : MonoBehaviour
     {
         foreach (WinningCombination c in combinations)
         {
-            // if (c.OccupiedBy != PlayerType.Empty)
-            // {
-            //     // if (c.firstItem.OccupiedBy == c.secondItem.OccupiedBy && c.firstItem.OccupiedBy == c.thirdItem.OccupiedBy)
-            //     // {
-            //     //     GameOver(c.firstItem.OccupiedBy);
-            //     // }
-            //     GameOver(OccupiedBy);
-            // }
+            if (c.Elements[0].OccupiedBy != PlayerType.Empty)
+            {
+                PlayerType winner = c.Elements[0].OccupiedBy;
+                bool combinationWon = true;
+                
+                foreach (var el in c.Elements)
+                {
+                    if (el.OccupiedBy != winner)
+                    {
+                        combinationWon = false;
+                    }
+                }
+
+                if (combinationWon)
+                {
+                    GameOver(winner);
+                }
+            }
         }
         if (movesCount >= TotalMovesAvailable && !hasWinner)
         {
@@ -195,13 +155,33 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void DestroyButtons()
+    {
+        foreach (var item in buttons)
+        {
+            Destroy(item.gameObject);
+        }
+        
+        buttons.Clear();
+    }
+    
     public void RestartGame()
     {
-        SetStartingSide(PlayerSide);
+        InitGame(PlayerSide);
     }
 
     public void FinishGame()
     {
         playerSide = PlayerType.Empty;
+    }
+
+    public void DecreaseDifficulty()
+    {
+        FieldSize--;
+    }
+
+    public void IncreaseDifficulty()
+    {
+        FieldSize++;
     }
 }
