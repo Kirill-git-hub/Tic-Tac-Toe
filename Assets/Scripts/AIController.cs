@@ -19,7 +19,7 @@ public class AIController : MonoBehaviour
     {
         if (gameController.MovesCount < gameController.TotalMovesAvailable && !gameController.IsPlayersTurn)
         {
-            GameButton randomButton = gameController.ButtonList[Random.Range(0, gameController.ButtonList.Count)];
+            GameButton randomButton = gameController.Buttons[Random.Range(0, gameController.Buttons.Count)];
             
             if (randomButton.OccupiedBy == PlayerType.Empty)
             {
