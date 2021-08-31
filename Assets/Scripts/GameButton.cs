@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameButton : MonoBehaviour
@@ -12,6 +8,9 @@ public class GameButton : MonoBehaviour
 
     private GameController gameController;
     private PlayerType occupiedBy = PlayerType.Empty;
+
+    private const float MAX_ALFA_COMPONENT = 1;
+    private const float MIN_ALFA_COMPONENT = 0;
     
     public Button Button => button;
     public PlayerType OccupiedBy => occupiedBy;
@@ -25,7 +24,7 @@ public class GameButton : MonoBehaviour
     public void Init(PlayerType playerType, Sprite imageSprite)
     {
         Color tempColor = buttonImage.color;
-        tempColor.a = 1f;
+        tempColor.a = MAX_ALFA_COMPONENT;
         buttonImage.color = tempColor;
         
         buttonImage.sprite = imageSprite;
@@ -49,7 +48,7 @@ public class GameButton : MonoBehaviour
     public void ResetButton()
     {
         Color tempColor = buttonImage.color;
-        tempColor.a = 0f;
+        tempColor.a = MIN_ALFA_COMPONENT;
         buttonImage.color = tempColor;
         
         button.interactable = true;
@@ -57,6 +56,4 @@ public class GameButton : MonoBehaviour
         occupiedBy = PlayerType.Empty;
         button.onClick.RemoveAllListeners();
     }
-    
-    
 }

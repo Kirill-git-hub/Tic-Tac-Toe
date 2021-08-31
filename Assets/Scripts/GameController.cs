@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -144,15 +141,9 @@ public class GameController : MonoBehaviour
         }
 
         restartButton.SetActive(true);
-
-        if (winner == PlayerType.Cross)
-        {
-            winnerX.SetActive(true);
-        }
-        else
-        {
-            winnerO.SetActive(true);
-        }
+        
+        winnerX.SetActive(winner == PlayerType.Cross);
+        winnerO.SetActive(winner == PlayerType.Zero);
     }
 
     private void DestroyButtons()
