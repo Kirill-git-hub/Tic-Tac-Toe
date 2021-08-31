@@ -6,7 +6,5 @@ using UnityEngine;
 [Serializable]
 public class WinningCombination
 {
-    public GameButton firstItem;
-    public GameButton secondItem;
-    public GameButton thirdItem;
+    public List<GameButton> elements = new List<GameButton>();
 }
